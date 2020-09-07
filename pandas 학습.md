@@ -3,6 +3,8 @@
 * 초기값
 
   ```python
+  import pandas as pd
+  
   df = pd.DataFrame([1, 2, 3])
   '''
      0
@@ -39,15 +41,22 @@
   '''
   ```
 
-* update value
+* 학습 전제 공통
 
   ```python
+  import pandas as pd
+  
   data = {
       'year' : [2016, 2017, 2018],
       'GDP rate' : [2.8, 3.1, 3.0],
       'GDP' : ['1.637M', '1.7M', '1.83M']
   }
   df = pd.DataFrame(data)
+  ```
+  
+* update value
+
+  ```python
   df.iloc[0, df.column.get_loc('year')] = 2011
   print(df)
   '''
@@ -57,16 +66,10 @@
   2  2018       3.0   1.83M
   '''
   ```
-
-* update
+  
+* update column
 
   ```python
-  data = {
-      'year' : [2016, 2017, 2018],
-      'GDP rate' : [2.8, 3.1, 3.0],
-      'GDP' : ['1.637M', '1.7M', '1.83M']
-  }
-  df = pd.DataFrame(data)
   df.update({'year' : [2011, 2012, 2013]})
   print(df)
   '''
@@ -76,17 +79,11 @@
   2  2013       3.0   1.83M
   '''
   ```
-
-* add value
+  
+* add row
 
   ```python
-  data = {
-      'year' : [2016, 2017, 2018],
-      'GDP rate' : [2.8, 3.1, 3.0],
-      'GDP' : ['1.637M', '1.7M', '1.83M']
-  }
-  df = pd.DataFrame(data)
-  df.loc[df.index.stop] = {2019, 0, '0M'}
+  df.loc[df.index.stop] = [2019, 0, '0M']
   print(df)
   '''
      year  GDP rate     GDP
@@ -96,22 +93,55 @@
   3  2019       0.0      0M
   '''
   ```
-
-* query
+  
+* append
 
   ```python
-  data = {
-      'year' : [2016, 2017, 2018],
-      'GDP rate' : [2.8, 3.1, 3.0],
-      'GDP' : ['1.637M', '1.7M', '1.83M']
-  }
-  df = pd.DataFrame(data)
+  row = {'year' : 2020, 'GDP rate': 0, 'GDP' : '0M'}
+  df = df.append(row, ignore_index=True)
+  print(df)
+  '''
+     year  GDP rate     GDP
+  0  2016       2.8  1.637M
+  1  2017       3.1    1.7M
+  2  2018       3.0   1.83M
+  3  2019       0.0      0M
+  '''
+  ```
   
+* get
+
+  ```python
   print(df[df['year'] > 2016][['year','GDP']])
   '''
      year    GDP
   1  2017   1.7M
   2  2018  1.83M
+  '''
+  ```
+  
+* drop column
+
+  ```python
+  df.drop(columns=['GDP'], inplace=True)
+  print(df)
+  '''
+     year  GDP rate
+  0  2016       2.8
+  1  2017       3.1
+  2  2018       3.0
+  '''
+  ```
+
+* add column
+
+  ```python
+  df['E'] = [1, 2, 3]
+  '''
+     year  GDP rate     GDP  E
+  0  2016       2.8  1.637M  1
+  1  2017       3.1    1.7M  2
+  2  2018       3.0   1.83M  3
   '''
   ```
 
